@@ -19,7 +19,7 @@ def main():
     elif Answer == 2:
         remove_contact()
     elif Answer == 3:
-        pretty_print()
+        pretty_print(directorio)
 
 #adds a contact
 def add_contact(directorio, name, srname, phone):
@@ -32,9 +32,12 @@ def remove_contact():
     pass
 
 #se imprime de una buena manera
-def pretty_print(directorio):
-    for contacto in directorio:
-        print("") 
+def pretty_print(directorio, data = "all"):
+    #decidimos que datos imprimir
+    if data == "all":
+        for contacto in directorio:
+            print("Contactos")
+            print(" {}\t|| {}\t|| {}\t".format(contacto["Nombre"], contacto["Apellido"], contacto["Telefono"]))
 
 
 
@@ -42,3 +45,4 @@ def pretty_print(directorio):
 def clean():
     os.system('cls||clear')
     print(":D\n")
+
