@@ -40,16 +40,21 @@ def main(directory):
 #adds a contact
 def add_contact(directory, name, srname, phone):
     '''puts given values in a dictionary and appends them in a list'''
-    new_contact = {"Nombre":name, "Apellido":srname, "Telefono":phone}
+    #se obtiene el ultimo id, de lo contrario pasa como default 0
+    if len(directory) > 0:
+        contact_id = directory[len(directory)-1][id] + 1
+    else:
+        contact_id = 0
+    new_contact = {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}
     directory.append(new_contact)
 
 
-#removes a contact
-def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
-    '''Searches the value(s) in all dictionarys in the given key(s) *key default = nombre\nkeys and values in a list'''
+def search_contact(directory, keys_searched, values_searched):
+    '''searches contact by given list of keys and list of values, returns false if not finded'''
     Is_seached_contact = False
     #se compara cada contacto en directorio
-    for contact in directory:
+    for contact_index in range(len(directory)):
+        contact = directory[contact_index]
         Is_seached_contact = True
         #se compara con los datos especificados
         for i in range(len(keys_searched)):
@@ -57,9 +62,20 @@ def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
                 Is_seached_contact = False
                 break
         if Is_seached_contact:
-            directory.remove(contact)
-            break   
-    if Is_seached_contact:
+            return contact
+    return False
+
+def call(contact_id):
+    '''recieves id to make a call'''
+    pass
+
+
+#removes a contact
+def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
+    '''Searches the value(s) in all dictionarys in the given key(s) *key default = nombre\nkeys and values in a list'''
+    contact = search_contact(directory, keys_searched, values_searched)
+    if contact != False:
+        directory.remove(contact)
         print("Eliminado exitosamente")
     else:
         print("No se encontro el contacto especificado")
