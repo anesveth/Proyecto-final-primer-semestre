@@ -1,13 +1,57 @@
-#---
-import request
-import os
+import sys, os
+
+#lista
+#directory =[{"Nombre":"asd", "Apellido":"Tomas", "Telefono":"443217"}]
+directory = []
+
+filename="InitialContacts.txt"
+ProgramName="Admin_contactos.py"
+
+def readfile(filename):
+    '''reads contact list from InitialContacts.txt'''
+    with open (filename) as archivo:
+        return archivo.readlines()
+        filename.close()
+
+def loadcontacts(filename):
+    '''loads contacts from file, has to be in same folder as the program'''
+    PathOfFile=os.path.dirname(os.path.abspath(filename))
+    PathOfProgram=os.path.dirname(os.path.abspath(ProgramName))
+    if (PathOfFile==PathOfProgram):
+        ReadingContacts=readfile(filename)
+        data=[]
+        for line in ReadingContacts:
+            DataFromlist=line.split("\n")
+            for j in DataFromlist:
+                if j != "":
+                    data.append(j)
+        contacts=dict()
+        for n in data:
+            elements=n.split(",")
+            try:
+                contacts.update({"Nombre":str(elements[0]).strip(),"Apellido":str(elements[1]).strip(),"Telefono":str(elements[2]).strip()})
+                directory.append(dict(contacts))
+            except:
+                contacts.update({"Nombre":str(elements[0]).strip(),"Apellido":"","Telefono":str(elements[1]).strip()})
+                directory.append(dict(contacts))
+        return (directory)
+     
+
+#se imprime de una buena manera
+def pretty_print(directory, data = "all"):
+    '''Prints the specified data (*default = "all") in dictionary'''
+    #decidimos que datos imprimir
+    if data == "all":
+        print("Contactos")
+        for contact in directory:
+            print(" {}\t|| {}\t|| {}\t".format(contact["Nombre"], contact["Apellido"], contact["Telefono"]))
+
 
 def initialize():
     '''declaration of basic variables'''
-    #lista
-    #directory =[{"Nombre":"asd", "Apellido":"Tomas", "Telefono":"443217"}]
-    directory = []
-    main(directory)
+    loadcontacts(filename)
+    pretty_print(directory)
+    #main(directory)
 
 
 #Controls program logic
@@ -15,7 +59,7 @@ def main(directory):
     '''runs the menu and sequence'''
     while(True):
         #opciones
-        print("\n\n\n")
+        print("\n\n")
         print("Que quieres hacer?")
         print("1 - añadir contacto\n2 - remover contacto\n3 - Mostrar contactos\n0 - salir")
         Answer = input()
@@ -80,14 +124,7 @@ def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
     else:
         print("No se encontro el contacto especificado")
 
-#se imprime de una buena manera
-def pretty_print(directory, data = "all"):
-    '''Prints the specified data (*default = "all") in dictionary'''
-    #decidimos que datos imprimir
-    if data == "all":
-        print("Contactos")
-        for contact in directory:
-            print(" {}\t|| {}\t|| {}\t".format(contact["Nombre"], contact["Apellido"], contact["Telefono"]))
+
 
 #utilities
 def clean():
