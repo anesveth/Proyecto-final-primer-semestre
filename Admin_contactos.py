@@ -2,7 +2,7 @@ import sys, os
 
 #lista
 #directory =[{"Nombre":"asd", "Apellido":"Tomas", "Telefono":"443217"}]
-directory = []
+UnorganizedDirectory = []
 
 filename="InitialContacts.txt"
 ProgramName="Admin_contactos.py"
@@ -30,28 +30,35 @@ def loadcontacts(filename):
             elements=n.split(",")
             try:
                 contacts.update({"Nombre":str(elements[0]).strip(),"Apellido":str(elements[1]).strip(),"Telefono":str(elements[2]).strip()})
-                directory.append(dict(contacts))
+                UnorganizedDirectory.append(dict(contacts))
             except:
                 contacts.update({"Nombre":str(elements[0]).strip(),"Apellido":"","Telefono":str(elements[1]).strip()})
-                directory.append(dict(contacts))
-        return (directory)
-     
+                UnorganizedDirectory.append(dict(contacts))
+        return UnorganizedDirectory
+    else:
+        return UnorganizedDirectory
+
+def organizing_directory(UnorganizedDirectory):
+    '''arranges contacts in alphabetical order by last name, all contacts without it are at the top'''
+    loadcontacts(filename)
+    UnorganizedDirectory=sorted(UnorganizedDirectory,key=lambda k:k["Apellido"])
+    return (UnorganizedDirectory)
 
 #se imprime de una buena manera
 def pretty_print(directory, data = "all"):
     '''Prints the specified data (*default = "all") in dictionary'''
     #decidimos que datos imprimir
     if data == "all":
-        print("Contactos")
+        print("---------Contactos---------")
         for contact in directory:
             print(" {}\t|| {}\t|| {}\t".format(contact["Nombre"], contact["Apellido"], contact["Telefono"]))
 
 
 def initialize():
     '''declaration of basic variables'''
-    loadcontacts(filename)
+    directory=organizing_directory(UnorganizedDirectory)
     pretty_print(directory)
-    #main(directory)
+    main(directory)
 
 
 #Controls program logic
