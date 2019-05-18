@@ -1,7 +1,7 @@
 import sys, os
 from data_from_file import UnorganizedDirectory, sort_dict_by_srname, get_external_data, add_contact
 #functions that handle the directory (adding contacts and uploading them from a file)
-from contact_options import change_contact,search_contact,remove_contact,call_contact,send_message
+from contact_options import change_contact,search_contact,remove_contact,call_contact,msg_contacts
 #functions that handle the contacts in the directory (modifying, deleting, searching, etc.); 
 # also all the options from the extra menu
 
@@ -49,11 +49,13 @@ def main(directory):
             srname = input("Ingresa el apellido: ")
             phone = input("Ingresa el numero telefónico: ")
             add_contact(directory, name, srname, phone)
+            print ("\nContacto añadido con exito ｡.｡:+*")
         #remove contact
         elif Answer == "2":
             try:
                 name = input("Ingresa el nombre: ")
                 remove_contact(directory, [name], ["Nombre"])
+                print ("\nContacto eliminado con exito ｡.｡:+*")
             except:
                 pass
         #show contacts
@@ -61,23 +63,32 @@ def main(directory):
             pretty_print(directory)
         #set to favorite
         elif Answer == "4":
-            #not exseptions allowed// un tested zone
+            #not exceptions allowed
             clean()
             print("1 - Hacer favorito\n2 - Quitar favorito\n3 - Llamar\n4 - Mostrar favoritos\n5 - Enviar mensaje\n0 - volver")
             Answer = input()
             if Answer == "1":
-                #not exseptions allowed
+                # Add to favorites / not exceptions allowed
+                pretty_print(directory)
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [True])
+                print ("\nAñadido a favoritos con exito ｡.｡:+*")
             #unset favorite
             elif Answer == "2":
-                #not exseptions allowed
+                # Delete favorites / not exceptions allowed
+                pretty_print(directory, "favorites")
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [False])
+                print ("\nEliminado de favoritos con exito ｡.｡:+*")
             elif Answer == "3":
+                # call / not exceptions allowed
+                pretty_print(directory)
                 call_contact(directory, input("Id del contacto: "))
             elif Answer == "4":
+                # show favorites / not exceptions allowed
                 pretty_print(directory, "favorites")
             elif Answer == "5":
-                send_message(directory)
+                # send message / not exceptions allowed
+                pretty_print(directory)
+                msg_contacts(directory)
             elif Answer == "0":
                 pass
         elif Answer == "0":
