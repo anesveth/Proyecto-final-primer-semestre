@@ -72,19 +72,22 @@ def msg_contacts(directory):
         except:
             pass
         contact = search_contact(directory, ["Id"], [id])
-        if contact != False:
-            #adding the recipient
-            destinarios.append(contact)
-            names.append(contact["Nombre"])
-            print("\nTo: "+ str(names).replace(",", " ")+"\n")
-            ans = input("Deseas agregar alguien mas? (si/no): ").lower()
-            while ans != "si" and ans != "no":
-                ans = input("(si/no): ")
-            if ans == "no":
-                break   
-        else: 
-            print("Id incorrecto")
-            pass
+        if contact not in destinarios:
+            if contact != False:
+                #adding the recipient
+                destinarios.append(contact)
+                names.append(contact["Nombre"])
+                print("\nTo: "+ str(names).replace(",", " ")+"\n")
+                ans = input("Deseas agregar alguien mas? (si/no): ").lower()
+                while ans != "si" and ans != "no":
+                    ans = input("(si/no): ")
+                if ans == "no":
+                    break   
+            else: 
+                print("Id incorrecto\n")
+                pass
+        else:
+            print("Este contacto ya se encuentra en la lista de destinatarios!\n")
     print("\n\nTo: "+ str(names).replace(",", " "))
     message = input("Ingresa mensaje:\n")
     print("\n\nTo: "+ str(names).replace(",", " "))
