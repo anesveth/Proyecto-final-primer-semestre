@@ -38,6 +38,7 @@ def get_directory(directory, url, gid):
 def post_directory(directory, url, gid):
         '''posts the directory to the url in json format'''    
         data = get_json(directory)
-        post = requests.post(url, data, params={"gid":gid})
+        print(data)
+        post = requests.post(url, json=data, params={"gid":gid})
         print (post)
     

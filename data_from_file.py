@@ -98,9 +98,9 @@ def get_json(directory):
     '''returns a json with contacts inside, keys are FirstName, LastName and Phone'''
     json_directory = []
     for contact in directory:
+        print(contact)
         json_contact = {"FirstName":contact["Nombre"], "LastName":contact["Apellido"], "Phone":contact["Telefono"]}
         json_directory.append(json_contact)
-    json_directory = json.dumps(json_directory)
     return json_directory
 
 

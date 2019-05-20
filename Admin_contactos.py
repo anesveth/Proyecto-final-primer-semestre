@@ -5,8 +5,8 @@ from contact_options import change_contact, search_contact, remove_contact, add_
 #functions that handle the contacts in the directory and the extra menu (call/message)
 from http_handler import get_directory, post_directory 
 #directory: {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}   
-url = "https://tinyurl.com/yygujcbg/contacts"
-gid = 1000
+url = "https://crolq57jod.execute-api.us-east-1.amazonaws.com/dev//contacts"
+gid = 6
 #UI
 def pretty_print(directory, data = "all", order = "by srname"):
     '''Prints the specified data (*default = "all") in dictionary in the specified order (*default = "by srname")'''
@@ -134,6 +134,7 @@ def main(directory):
                 except:
                     print("\n[Error] No se ha podido extraer los contactos")
             elif Answer == "7":
+                post_directory(directory, url, gid)
                 try:
                     post_directory(directory, url, gid)
                 except:
