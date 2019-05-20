@@ -5,13 +5,17 @@ from contact_options import change_contact,search_contact,remove_contact,call_co
 #functions that handle the contacts in the directory (modifying, deleting, searching, etc.); 
 # also all the options from the extra menu
 #directory: {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}   
+
 #UI
 def pretty_print(directory, data = "all", order = "by srname"):
     '''Prints the specified data (*default = "all") in dictionary in the specified order (*default = "by srname")'''
     #giving it the order
     #if directory is empty
     if len(directory)<1:
-        print("｡o°✥✤✣ Contactos ✣✤✥°o｡")
+        try:
+            print("｡o°✥✤✣ Contactos ✣✤✥°o｡")
+        except:
+            print("       Contactos       ")
     else:
         if (order == "by srname"):
             ordered_directory = sort_dict_by_srname(directory)
@@ -19,13 +23,20 @@ def pretty_print(directory, data = "all", order = "by srname"):
             ordered_directory = directory
         #Deciding how data should be printed
         if data == "all":
-            print("｡o°✥✤✣ Contactos ✣✤✥°o｡")
+            try:
+                print("｡o°✥✤✣ Contactos ✣✤✥°o｡")
+            except:
+                print("       Contactos       ")
             for contact_no in range(len(ordered_directory)):
                 contact = ordered_directory[contact_no]
                 print(" {}\t|| {}\t|| {}\t|| {}\t".format(contact["Nombre"], contact["Apellido"], contact["Telefono"], contact["Id"]))
         #Favorites list
         if data == "favorites":
-            print("｡o°✥✤✣ Contactos Favoritos ✣✤✥°o｡")
+            try:
+                print("｡o°✥✤✣ Contactos Favoritos ✣✤✥°o｡")
+            except:
+                print("         Contactos Favoritos         ")
+            
             for contact_no in range(len(ordered_directory)):
                 contact = ordered_directory[contact_no]
                 if contact["Favorito"]:
@@ -120,10 +131,15 @@ def main(directory):
             print("Intentalo de nuevo, y asegurate de ingresar el dato correcto")
 
  #Miscellaneous 
+
+#utilities
 def clean():
     '''cleans the terminal'''
     os.system('cls||clear')
-    print("✼　 ҉ 　✼　 ҉ 　✼　 ҉ 　✼　 ҉ 　✼　 ҉ 　✼\n")
+    try:
+        print("✼　 ҉ 　✼　 ҉ 　✼　 ҉ 　✼　 ҉ 　✼　 ҉ 　✼\n")
+    except:
+        pass
 
 #__init__
 initialize()

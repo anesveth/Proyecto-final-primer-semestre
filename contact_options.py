@@ -1,4 +1,15 @@
-import time, sys
+"""
+Functions for changes on directory contacts or functionalities like send messages
+"""
+#liraries
+import time, threading, os
+#libraries for windows
+if os.name() == 'nt':
+    try:
+        import msvcrt
+    except: 
+        pass
+
 def change_contact(directory, contact_id, keys_to_change, new_values):
     '''changes the given contact keys to the new values'''
     for x in range(len(directory)):
@@ -38,8 +49,33 @@ def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
     else:
         print("No se encontro el contacto especificado :(")
 
+def input_thread(call_ended):
+    '''turns variable True when c is pressed'''
+    system_os = os.name
+    if system_os == 'nt':
+        print("Presiona c para cancelar")
+        while True:
+            time.sleep(.1 )
+            #read the key pressed
+            if msvcrt.kbhit():
+                key = msvcrt.getch()
+                if key == b'c' or key == b'C':
+                    call_ended = True
+                    break
+            elif call_ended:
+                break
+    else:
+        print("Ingresa c para cancelar")
+        while True:
+            input_pressed = input()
+            print(input_pressed)
+            if input_pressed.lower() == "c" or call_ended:
+                call_ended = True
+                break
+
 def call_contact(directory, contact_id):
     '''calls for 60 secs or until "c" is pressed'''
+    call_ended = False
     try:
         contact_id = int(contact_id)
     except:
@@ -48,15 +84,18 @@ def call_contact(directory, contact_id):
     if contact != False :
         print("Llamando a: {} {}\nTelefono: {}".format(contact["Nombre"], contact["Apellido"], contact["Telefono"]))
         start_time = time.time()
-        print("Presiona c para cancelar")
+        cancel_thread = threading.Thread(target = input_thread(call_ended))
+        cancel_thread.start()
         while time.time() - start_time < 60:
+            time.sleep(.1)
+            if call_ended:
+                break
             if msvcrt.kbhit():
                 if msvcrt.getch() == b'c' or msvcrt.getch() == b'C':
                     break
         print("\n*+:｡.｡ Llamada finalizada ｡.｡:+*")
     else:
         print ("Id invalido")
-
     
 def msg_contacts(directory):
     '''sends message to chosen contact(s)'''
