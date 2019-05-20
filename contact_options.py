@@ -2,7 +2,7 @@
 Functions for changes on directory contacts or functionalities like send messages
 """
 #libraries
-import time, threading, os
+import time, os
 #libraries for windows
 if os.name == 'nt':
     try:
@@ -60,34 +60,19 @@ def add_contact(directory, name, srname, phone):
     new_contact = {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}
     directory.append(new_contact)
 
-#functionalities, extra menu
-def input_thread(call_ended):
-    '''turns variable True when c is pressed'''
-    system_os = os.name
-    if system_os == 'nt':
-        print("Presiona c para cancelar")
-        while True:
-            time.sleep(0.1)
-            #read the key pressed
+def wait_input():
+    start_time = time.time()
+    print("presiona c para cancelar")
+    while time.time() - start_time < 60:
             if msvcrt.kbhit():
+                time.sleep(3)
                 key = msvcrt.getch()
+                print(key)  
                 if key == b'c' or key == b'C':
-                    call_ended = True
-                    break
-            elif call_ended:
-                break
-    else:
-        print("Ingresa c para cancelar")
-        while True:
-            input_pressed = input()
-            print(input_pressed)
-            if input_pressed.lower() == "c" or call_ended:
-                call_ended = True
-                break
-
+                    time.sleep(3)
+                    break 
 def call_contact(directory, contact_id):
     '''calls for 60 secs or until "c" is pressed'''
-    call_ended = False
     try:
         contact_id = int(contact_id)
     except:
@@ -95,17 +80,16 @@ def call_contact(directory, contact_id):
     contact = search_contact(directory, ["Id"], [contact_id])
     if contact != False :
         print("Llamando a: {} {}\nTelefono: {}".format(contact["Nombre"], contact["Apellido"], contact["Telefono"]))
-        start_time = time.time()
-        cancel_thread = threading.Thread(target = input_thread(call_ended))
-        cancel_thread.start()
-        while time.time() - start_time < 60:
-            time.sleep(.1)
-            if call_ended:
-                break
-            if msvcrt.kbhit():
-                if msvcrt.getch() == b'c' or msvcrt.getch() == b'C':
-                    break
-        print("\n*+:｡.｡ Llamada finalizada ｡.｡:+*")
+        system_os = os.name
+        if system_os == 'nt':
+              wait_input()
+        else:
+            while time.time() - start_time < 60:
+                pass
+        try:
+            print("\n*+:｡.｡ Llamada finalizada ｡.｡:+*")
+        except:
+            pass
     else:
         print ("Id invalido")
     

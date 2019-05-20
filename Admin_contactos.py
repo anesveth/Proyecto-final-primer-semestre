@@ -1,4 +1,4 @@
-import sys, os
+import sys, os,time 
 from data_from_file import UnorganizedDirectory, sort_dict_by_srname, load_from_file
 #functions that handle data (Loading a file and sorting)
 from contact_options import change_contact, search_contact, remove_contact, add_contact, call_contact, msg_contacts
@@ -69,7 +69,7 @@ def main(directory):
             srname = input("Ingresa el apellido: ")
             phone = input("Ingresa el numero telefónico: ")
             add_contact(directory, name, srname, phone)
-            print ("\nContacto añadido con exito ｡.｡:+*")
+            print ("\nContacto añadido con exito ")
         #remove contact
         elif Answer == "2":
             clean()
@@ -91,7 +91,7 @@ def main(directory):
                 #checking that the loading was successfull
                 if (type(load)==list):
                     directory=load
-                    print("\nContactos añadidos con exito｡.｡:+*")
+                    print("\nContactos añadidos con exito")
                 else:
                     print("\nContactos no añadidos")
             else:
@@ -102,41 +102,42 @@ def main(directory):
             clean()
             print("1 - Hacer favorito\n2 - Quitar favorito\n3 - Llamar\n4 - Mostrar favoritos\n5 - Enviar mensaje\
                 \n6 - Descargar datos de internet\n7 - Subir datos a internet\n0 - volver")
-            Answer = input()
-            if Answer == "1":
+            Answer2 = input()
+            if Answer2 == "1":
                 # Add to favorites / not exceptions allowed
                 pretty_print(directory)
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [True])
-                print ("\nAñadido a favoritos con exito ｡.｡:+*")
-            #unset favorite
-            elif Answer == "2":
+                print ("\nAñadido a favoritos con exito ")
+            elif Answer2 == "2":
                 # Delete favorites / not exceptions allowed
                 pretty_print(directory, "favorites")
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [False])
-                print ("\nEliminado de favoritos con exito ｡.｡:+*")
-            elif Answer == "3":
+                print ("\nEliminado de favoritos con exito ")
+            elif Answer2 == "3":
                 # call / not exceptions allowed
                 pretty_print(directory)
-                call_contact(directory, input("Id del contacto: "))
-            elif Answer == "4":
+                contact_id = input("Id del contacto: ")
+                call_contact(directory, contact_id)
+                time.sleep(2)
+            elif Answer2 == "4":
                 # show favorites / not exceptions allowed
                 pretty_print(directory, "favorites")
-            elif Answer == "5":
+            elif Answer2 == "5":
                 # send message / not exceptions allowed
                 pretty_print(directory)
                 msg_contacts(directory)
-            elif Answer == "6":
+            elif Answer2 == "6":
                 try:
                     get_directory(directory,url, gid)
-                    print ("\nAñadidos con exito ｡.｡:+*")
+                    print ("\nAñadidos con exito ")
                 except:
                     print("\n[Error] No se ha podido extraer los contactos")
-            elif Answer == "7":
+            elif Answer2 == "7":
                 try:
                     post_directory(directory, url, gid)
                 except:
                     print("\n[Error] No se ha podido subir los contactos")
-            elif Answer == "0":
+            elif Answer2 == "0":
                 pass
         elif Answer == "0":
             exit()
@@ -144,8 +145,6 @@ def main(directory):
             print("Intentalo de nuevo, y asegurate de ingresar el dato correcto")
 
  #Miscellaneous 
-
-#utilities
 def clean():
     '''cleans the terminal'''
     os.system('cls||clear')
@@ -155,4 +154,5 @@ def clean():
         pass
 
 #__init__
-initialize()
+if __name__ == "__main__":
+    initialize()
