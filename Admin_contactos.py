@@ -69,7 +69,7 @@ def main(directory):
             srname = input("Ingresa el apellido: ")
             phone = input("Ingresa el numero telefónico: ")
             add_contact(directory, name, srname, phone)
-            print ("\nContacto añadido con exito ｡.｡:+*")
+            print ("\nContacto añadido con exito")
         #remove contact
         elif Answer == "2":
             clean()
@@ -91,7 +91,7 @@ def main(directory):
                 #checking that the loading was successfull
                 if (type(load)==list):
                     directory=load
-                    print("\nContactos añadidos con exito｡.｡:+*")
+                    print("\nContactos añadidos con exito")
                 else:
                     print("\nContactos no añadidos")
             else:
@@ -107,13 +107,13 @@ def main(directory):
                 # Add to favorites / not exceptions allowed
                 pretty_print(directory)
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [True])
-                print ("\nAñadido a favoritos con exito ｡.｡:+*")
+                print ("\nAñadido a favoritos con exito")
             #unset favorite
             elif Answer == "2":
                 # Delete favorites / not exceptions allowed
                 pretty_print(directory, "favorites")
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [False])
-                print ("\nEliminado de favoritos con exito ｡.｡:+*")
+                print ("\nEliminado de favoritos con exito")
             elif Answer == "3":
                 # call / not exceptions allowed
                 pretty_print(directory)
@@ -128,7 +128,7 @@ def main(directory):
             elif Answer == "6":
                 try:
                     get_directory(directory,url, gid)
-                    print ("\nAñadidos con exito ｡.｡:+*")
+                    print ("\nAñadidos con exito")
                 except:
                     print("\n[Error] No se ha podido extraer los contactos")
             elif Answer == "7":

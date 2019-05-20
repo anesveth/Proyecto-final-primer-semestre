@@ -46,7 +46,7 @@ def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
     contact = search_contact(directory, keys_searched, values_searched)
     if contact != False:
         directory.remove(contact)
-        print("\nEliminado exitosamente ｡.｡:+*")
+        print("\nEliminado exitosamente")
     else:
         print("No se encontro el contacto especificado :(")
 
@@ -105,7 +105,7 @@ def call_contact(directory, contact_id):
             if msvcrt.kbhit():
                 if msvcrt.getch() == b'c' or msvcrt.getch() == b'C':
                     break
-        print("\n*+:｡.｡ Llamada finalizada ｡.｡:+*")
+        print("\n Llamada finalizada !")
     else:
         print ("Id invalido")
     
@@ -144,5 +144,5 @@ def msg_contacts(directory):
     print("\n\nTo: "+ str(names).replace(",", " "))
     
     print("Msg: "+ message)
-    print("\nMensaje enviado ｡.｡:+*")
+    print("\nMensaje enviado!")
 
