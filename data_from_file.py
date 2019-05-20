@@ -91,7 +91,7 @@ def load_from_file(directory, filename =""):
 
 def sort_dict_by_srname(directory):
     '''orders a list of dictionaries by the key "Apellido"'''
-    directory=sorted(directory,key=lambda k:k["Apellido"])
+    directory=sorted(directory,key=lambda contact:contact["Apellido"])
     return (directory)
 
 def get_json(directory):

@@ -1,10 +1,10 @@
 """
 Functions for changes on directory contacts or functionalities like send messages
 """
-#liraries
+#libraries
 import time, threading, os
 #libraries for windows
-if os.name() == 'nt':
+if os.name == 'nt':
     try:
         import msvcrt
     except: 
@@ -67,7 +67,7 @@ def input_thread(call_ended):
     if system_os == 'nt':
         print("Presiona c para cancelar")
         while True:
-            time.sleep(.1 )
+            time.sleep(0.1)
             #read the key pressed
             if msvcrt.kbhit():
                 key = msvcrt.getch()

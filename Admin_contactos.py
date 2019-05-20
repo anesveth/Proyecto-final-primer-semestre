@@ -5,8 +5,8 @@ from contact_options import change_contact, search_contact, remove_contact, add_
 #functions that handle the contacts in the directory and the extra menu (call/message)
 from http_handler import get_directory, post_directory 
 #directory: {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}   
-url = "http://demo7862839.mockable.io/contacts?gid=100"
-gid = 100
+url = "https://tinyurl.com/yygujcbg/contacts?gid=1000"
+gid = 1000
 #UI
 def pretty_print(directory, data = "all", order = "by srname"):
     '''Prints the specified data (*default = "all") in dictionary in the specified order (*default = "by srname")'''
@@ -59,7 +59,7 @@ def main(directory):
         #opciones
         print("\n\n")
         print("Que quieres hacer?")
-        print("1 - Agregar contacto\n2 - Remover contacto\n3 - Mostrar contactos\n4 - Descargar contactos\n5 - Otros\n0 - Salir")
+        print("1 - Agregar contacto\n2 - Remover contacto\n3 - Mostrar contactos\n4 - Descargar contactos desde archivos\n5 - Otros\n0 - Salir")
         Answer = input()
         clean()
         #Add contact
@@ -126,9 +126,16 @@ def main(directory):
                 pretty_print(directory)
                 msg_contacts(directory)
             elif Answer == "6":
-                get_directory(directory,url, gid)
+                try:
+                    get_directory(directory,url, gid)
+                    print ("\nAñadidos con exito ｡.｡:+*")
+                except:
+                    print("\n[Error] No se ha podido extraer los contactos")
             elif Answer == "7":
-                post_directory(directory, url, gid)
+                try:
+                    post_directory(directory, url, gid)
+                except:
+                    print("\n[Error] No se ha podido subir los contactos")
             elif Answer == "0":
                 pass
         elif Answer == "0":

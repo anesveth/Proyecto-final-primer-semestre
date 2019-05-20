@@ -5,13 +5,29 @@ from data_from_file import add_contact, get_json
 import requests, json
 
 def get_directory(directory, url, gid):
-    url = "http://demo7862839.mockable.io/contacts?gid=100"
-    new_contacts = requests.get(url, params={"gid":gid}).json()
-    new_contacts = json.loads(new_contacts)
-    for contact in new_contacts:
-        add_contact(directory, contact["FirstName"], contact["LastName"], contact["Phone"] )
+        '''gets contacts from json format in url to directory'''
+        new_contacts = requests.get(url, params={"gid":gid}).json()
+        for contact in new_contacts:
+                try:
+                        contact_name=contact["FirstName"]
+                except:
+                        contact_name=""
+                try:
+                        contact_srname=contact["LastName"]
+                except:
+                        contact_srname=""
+                try:
+                        contact_phone=contact["Phone"]
+                except:
+                        contact_phone=""
+
+                add_contact(directory, contact_name, contact_srname, contact_phone)
+
+
 
 def post_directory(directory, url, gid):
-    data = get_json(directory)
-    requests.post(url, data, params={"gid":gid})
+        '''posts the directory to the url in json format'''    
+        data = get_json(directory)
+        post = requests.post(url, data, params={"gid":gid})
+        print (post)
     
