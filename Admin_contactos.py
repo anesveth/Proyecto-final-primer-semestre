@@ -1,11 +1,12 @@
 import sys, os
-from data_from_file import UnorganizedDirectory, sort_dict_by_srname, load_from_file, add_contact
-#functions that handle the directory (adding contacts and uploading them from a file)
-from contact_options import change_contact,search_contact,remove_contact,call_contact,msg_contacts
-#functions that handle the contacts in the directory (modifying, deleting, searching, etc.); 
-# also all the options from the extra menu
+from data_from_file import UnorganizedDirectory, sort_dict_by_srname, load_from_file
+#functions that handle data (Loading a file and sorting)
+from contact_options import change_contact, search_contact, remove_contact, add_contact, call_contact, msg_contacts
+#functions that handle the contacts in the directory and the extra menu (call/message)
+from http_handler import get_directory, post_directory 
 #directory: {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}   
-
+url = "http://demo7862839.mockable.io/contacts?gid=100"
+gid = 100
 #UI
 def pretty_print(directory, data = "all", order = "by srname"):
     '''Prints the specified data (*default = "all") in dictionary in the specified order (*default = "by srname")'''
@@ -99,7 +100,8 @@ def main(directory):
         elif Answer == "5":
             #not exceptions allowed
             clean()
-            print("1 - Hacer favorito\n2 - Quitar favorito\n3 - Llamar\n4 - Mostrar favoritos\n5 - Enviar mensaje\n0 - volver")
+            print("1 - Hacer favorito\n2 - Quitar favorito\n3 - Llamar\n4 - Mostrar favoritos\n5 - Enviar mensaje\
+                \n6 - Descargar datos de internet\n7 - Subir datos a internet\n0 - volver")
             Answer = input()
             if Answer == "1":
                 # Add to favorites / not exceptions allowed
@@ -123,6 +125,10 @@ def main(directory):
                 # send message / not exceptions allowed
                 pretty_print(directory)
                 msg_contacts(directory)
+            elif Answer == "6":
+                get_directory(directory,url, gid)
+            elif Answer == "7":
+                post_directory(directory, url, gid)
             elif Answer == "0":
                 pass
         elif Answer == "0":

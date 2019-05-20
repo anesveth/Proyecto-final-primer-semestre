@@ -10,6 +10,7 @@ if os.name() == 'nt':
     except: 
         pass
 
+#Changing contacts
 def change_contact(directory, contact_id, keys_to_change, new_values):
     '''changes the given contact keys to the new values'''
     for x in range(len(directory)):
@@ -49,6 +50,17 @@ def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
     else:
         print("No se encontro el contacto especificado :(")
 
+def add_contact(directory, name, srname, phone):
+    '''puts given values in a dictionary and appends them to the directory list'''
+    #the last id is obtained or default = 1
+    if len(directory) > 0:
+        contact_id = directory[len(directory)-1]["Id"] + 1
+    else:
+        contact_id = 1
+    new_contact = {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}
+    directory.append(new_contact)
+
+#functionalities, extra menu
 def input_thread(call_ended):
     '''turns variable True when c is pressed'''
     system_os = os.name
@@ -133,3 +145,4 @@ def msg_contacts(directory):
     
     print("Msg: "+ message)
     print("\nMensaje enviado ｡.｡:+*")
+

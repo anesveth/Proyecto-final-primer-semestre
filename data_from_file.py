@@ -1,4 +1,5 @@
-import os
+import os, json
+from contact_options import add_contact
 #global variables
 UnorganizedDirectory = []
 ProgramName="Admin_contactos.py"
@@ -71,9 +72,6 @@ def loadcontacts(filename):
         else:
             print("\n[Error] El formato de los contactos no es legible\n")
 
-        
-
-
 def load_from_file(directory, filename =""):
     '''loads file and content of the given filename (the opening file should be in the same place as the code)'''
     try:
@@ -91,21 +89,19 @@ def load_from_file(directory, filename =""):
     except:
         return False
 
-
-
 def sort_dict_by_srname(directory):
     '''orders a list of dictionaries by the key "Apellido"'''
     directory=sorted(directory,key=lambda k:k["Apellido"])
     return (directory)
 
+def get_json(directory):
+    '''returns a json with contacts inside, keys are FirstName, LastName and Phone'''
+    json_directory = []
+    for contact in directory:
+        json_contact = {"FirstName":contact["Nombre"], "LastName":contact["Apellido"], "Phone":contact["Telefono"]}
+        json_directory.append(json_contact)
+    json_directory = json.dumps(json_directory)
+    return json_directory
 
-#Editing directory
-def add_contact(directory, name, srname, phone):
-    '''puts given values in a dictionary and appends them to the directory list'''
-    #se obtiene el ultimo id, de lo contrario pasa como default 1
-    if len(directory) > 0:
-        contact_id = directory[len(directory)-1]["Id"] + 1
-    else:
-        contact_id = 1
-    new_contact = {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}
-    directory.append(new_contact)
+
+    
