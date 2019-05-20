@@ -46,7 +46,7 @@ def remove_contact(directory, values_searched, keys_searched = ["Nombre"]):
     contact = search_contact(directory, keys_searched, values_searched)
     if contact != False:
         directory.remove(contact)
-        print("\nEliminado exitosamente ｡.｡:+*")
+        print("\nEliminado exitosamente")
     else:
         print("No se encontro el contacto especificado :(")
 
@@ -84,10 +84,11 @@ def call_contact(directory, contact_id):
         if system_os == 'nt':
               wait_input()
         else:
+            start_time = time.time()
             while time.time() - start_time < 60:
                 pass
         try:
-            print("\n*+:｡.｡ Llamada finalizada ｡.｡:+*")
+            print("\n Llamada finalizada !")
         except:
             pass
     else:
@@ -128,5 +129,5 @@ def msg_contacts(directory):
     print("\n\nTo: "+ str(names).replace(",", " "))
     
     print("Msg: "+ message)
-    print("\nMensaje enviado ｡.｡:+*")
+    print("\nMensaje enviado!")
 

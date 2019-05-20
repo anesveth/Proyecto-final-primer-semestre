@@ -107,13 +107,14 @@ def main(directory):
                 # Add to favorites / not exceptions allowed
                 pretty_print(directory)
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [True])
-                print ("\nAñadido a favoritos con exito ")
-            elif Answer2 == "2":
+                print ("\nAñadido a favoritos con exito")
+            #unset favorite
+            elif Answer == "2":
                 # Delete favorites / not exceptions allowed
                 pretty_print(directory, "favorites")
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [False])
-                print ("\nEliminado de favoritos con exito ")
-            elif Answer2 == "3":
+                print ("\nEliminado de favoritos con exito")
+            elif Answer == "3":
                 # call / not exceptions allowed
                 pretty_print(directory)
                 contact_id = input("Id del contacto: ")
@@ -129,7 +130,7 @@ def main(directory):
             elif Answer2 == "6":
                 try:
                     get_directory(directory,url, gid)
-                    print ("\nAñadidos con exito ")
+                    print ("\nAñadidos con exito")
                 except:
                     print("\n[Error] No se ha podido extraer los contactos")
             elif Answer2 == "7":
