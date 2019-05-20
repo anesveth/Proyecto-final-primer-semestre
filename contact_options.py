@@ -60,17 +60,7 @@ def add_contact(directory, name, srname, phone):
     new_contact = {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}
     directory.append(new_contact)
 
-def wait_input():
-    start_time = time.time()
-    print("presiona c para cancelar")
-    while time.time() - start_time < 60:
-            if msvcrt.kbhit():
-                time.sleep(3)
-                key = msvcrt.getch()
-                print(key)  
-                if key == b'c' or key == b'C':
-                    time.sleep(3)
-                    break 
+
 def call_contact(directory, contact_id):
     '''calls for 60 secs or until "c" is pressed'''
     try:
@@ -82,7 +72,14 @@ def call_contact(directory, contact_id):
         print("Llamando a: {} {}\nTelefono: {}".format(contact["Nombre"], contact["Apellido"], contact["Telefono"]))
         system_os = os.name
         if system_os == 'nt':
-              wait_input()
+            start_time = time.time()
+            print("presiona c para cancelar")
+            while time.time() - start_time < 60:
+                    if msvcrt.kbhit():
+                        key = msvcrt.getch()
+                        print(key)  
+                        if key == b'c' or key == b'C':
+                            break 
         else:
             start_time = time.time()
             while time.time() - start_time < 60:

@@ -5,7 +5,7 @@ from contact_options import change_contact, search_contact, remove_contact, add_
 #functions that handle the contacts in the directory and the extra menu (call/message)
 from http_handler import get_directory, post_directory 
 #directory: {"Id": contact_id, "Nombre":name, "Apellido":srname, "Telefono":phone, "Favorito":False}   
-url = "https://tinyurl.com/yygujcbg/contacts?gid=1000"
+url = "https://tinyurl.com/yygujcbg/contacts"
 gid = 1000
 #UI
 def pretty_print(directory, data = "all", order = "by srname"):
@@ -102,8 +102,8 @@ def main(directory):
             clean()
             print("1 - Hacer favorito\n2 - Quitar favorito\n3 - Llamar\n4 - Mostrar favoritos\n5 - Enviar mensaje\
                 \n6 - Descargar datos de internet\n7 - Subir datos a internet\n0 - volver")
-            Answer2 = input()
-            if Answer2 == "1":
+            Answer = input()
+            if Answer == "1":
                 # Add to favorites / not exceptions allowed
                 pretty_print(directory)
                 change_contact(directory, input("Id del contacto: "), ["Favorito"], [True])
@@ -120,25 +120,25 @@ def main(directory):
                 contact_id = input("Id del contacto: ")
                 call_contact(directory, contact_id)
                 time.sleep(2)
-            elif Answer2 == "4":
+            elif Answer == "4":
                 # show favorites / not exceptions allowed
                 pretty_print(directory, "favorites")
-            elif Answer2 == "5":
+            elif Answer == "5":
                 # send message / not exceptions allowed
                 pretty_print(directory)
                 msg_contacts(directory)
-            elif Answer2 == "6":
+            elif Answer == "6":
                 try:
                     get_directory(directory,url, gid)
                     print ("\nAñadidos con exito")
                 except:
                     print("\n[Error] No se ha podido extraer los contactos")
-            elif Answer2 == "7":
+            elif Answer == "7":
                 try:
                     post_directory(directory, url, gid)
                 except:
                     print("\n[Error] No se ha podido subir los contactos")
-            elif Answer2 == "0":
+            elif Answer == "0":
                 pass
         elif Answer == "0":
             exit()

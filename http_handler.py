@@ -7,7 +7,18 @@ import requests, json
 def get_directory(directory, url, gid):
         '''gets contacts from json format in url to directory'''
         new_contacts = requests.get(url, params={"gid":gid}).json()
+        try:
+                new_contacts = new_contacts['json_payload']
+        except:
+                pass
+        print(new_contacts)
+        if type(new_contacts) != type(["", ""]):
+                new_contacts = [new_contacts]
         for contact in new_contacts:
+                print(contact)
+                contact_name=""
+                contact_srname=""
+                contact_phone=""
                 try:
                         contact_name=contact["FirstName"]
                 except:
@@ -20,7 +31,6 @@ def get_directory(directory, url, gid):
                         contact_phone=contact["Phone"]
                 except:
                         contact_phone=""
-
                 add_contact(directory, contact_name, contact_srname, contact_phone)
 
 
